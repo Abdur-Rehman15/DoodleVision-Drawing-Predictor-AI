@@ -23,7 +23,7 @@ function App() {
       setConfidence(parseFloat(data.confidence));
       setDoodleHistory(prev => [...prev.slice(-4), { image, prediction: data.prediction }]);
 
-      if (parseFloat(data.confidence) > 80) {
+      if (parseFloat(data.confidence) >50) {
         setCelebrate(true);
         setTimeout(() => setCelebrate(false), 3000);
       }
