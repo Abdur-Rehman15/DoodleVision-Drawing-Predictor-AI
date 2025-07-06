@@ -12,7 +12,7 @@ app.post('/predict', (req, res) => {
   const base64Data = req.body.image.replace(/^data:image\/png;base64,/, "");
   fs.writeFileSync("input.png", base64Data, 'base64');
 
-  exec('"C:\\Users\\Dell\\AppData\\Local\\Programs\\Python\\Python310\\python.exe" predictor.py', (error, stdout, stderr) => {
+  exec('python3 predictor.py', (error, stdout, stderr) => {
     if (error) {
       console.error(`Error: ${stderr}`);
       return res.status(500).send('Prediction failed.');
