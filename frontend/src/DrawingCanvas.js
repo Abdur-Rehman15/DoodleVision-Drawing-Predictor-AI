@@ -21,6 +21,7 @@ function DrawingCanvas({ onSubmit, theme }) {
 
   const submitCanvas = () => {
     const dataUrl = canvasRef.current.toDataURL('image/png');
+    console.log(dataUrl);
     onSubmit(dataUrl);
   };
 

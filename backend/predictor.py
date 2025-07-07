@@ -4,9 +4,9 @@ import joblib
 
 IMG_SIZE = 64
 
-model = joblib.load('../model.pkl')
-pca = joblib.load('../pca.pkl')
-scaler = joblib.load('../scaler.pkl')
+model = joblib.load('model.pkl')
+pca = joblib.load('pca.pkl')
+scaler = joblib.load('scaler.pkl')
 
 img = Image.open("input.png").convert('L').resize((IMG_SIZE, IMG_SIZE))
 img = ImageOps.invert(img)

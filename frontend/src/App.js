@@ -57,7 +57,7 @@ function App() {
         <h1 className="app-title">
           <span className="title-word">Doodle</span>
           <span className="title-word">Vision</span>
-          <span className="subtitle">AI Sketch Detective</span>
+          <span className="subtitle">AI Sketch Detectivee</span>
         </h1>
 
         <button onClick={toggleTheme} className="theme-toggle">

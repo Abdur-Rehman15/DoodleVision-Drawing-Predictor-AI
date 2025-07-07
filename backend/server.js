@@ -5,7 +5,9 @@ const { exec } = require('child_process');
 const fs = require('fs');
 
 const app = express();
+
 app.use(cors());
+
 app.use(bodyParser.json({ limit: '10mb' }));
 
 app.post('/predict', (req, res) => {
