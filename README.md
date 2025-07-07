@@ -55,7 +55,7 @@ npm start
 
 ```
 cd ../backend
-node server.js            # Starts backend server on http://localhost:5000
+node server.js
 ```
 
 --- 
