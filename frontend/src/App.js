@@ -7,7 +7,7 @@ function App() {
   const [confidence, setConfidence] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [doodleHistory, setDoodleHistory] = useState([]);
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('dark');
   const [celebrate, setCelebrate] = useState(false);
 
   const handleSubmit = async (image) => {
@@ -57,7 +57,7 @@ function App() {
         <h1 className="app-title">
           <span className="title-word">Doodle</span>
           <span className="title-word">Vision</span>
-          <span className="subtitle">AI Sketch Detectivee</span>
+          <span className="subtitle">AI Sketch Detective</span>
         </h1>
 
         <button onClick={toggleTheme} className="theme-toggle">
@@ -66,7 +66,7 @@ function App() {
       </header>
 
       <div className="main-content">
-        <div className={`canvas-container ${theme}`}>
+        <div className={`canvas-container ${theme}`} style={{ position: 'relative' }}>
           <div className="canvas-header">
             <h2>Draw something and I'll guess what it is!</h2>
             <p className="instructions">
@@ -74,38 +74,26 @@ function App() {
             </p>
           </div>
 
-          <DrawingCanvas onSubmit={handleSubmit} theme={theme} />
+          <DrawingCanvas onSubmit={handleSubmit} onClear={() => {
+            setPrediction(null);
+            setConfidence(null);
+          }} theme={theme} />
 
-          <div className="prediction-result">
-            {isLoading ? (
-              <div className="loading-animation">
-                <div className="spinner"></div>
-                <p>Analyzing your masterpiece...</p>
-              </div>
-            ) : prediction ? (
-              <>
-                <h3 className="prediction-text">
-                  I see... <span className="highlight">{prediction}</span>!
-                </h3>
-                <div className="confidence-meter">
-                  <div
-                    className="confidence-fill"
-                    style={{ width: `${confidence}%` }}
-                  ></div>
-                  <span className="confidence-value">
-                    Confidence: {confidence}%
-                  </span>
-                </div>
-                {confidence > 80 && (
-                  <div className="success-message">🎉 Wow, that's clear!</div>
-                )}
-              </>
-            ) : (
-              <div className="empty-state">
-                <p>Your prediction will appear here</p>
-              </div>
-            )}
-          </div>
+          {/* 🎯 Prediction Popup OVER canvas */}
+          {!isLoading && prediction && (
+            <div className="prediction-popup">
+              <h3 className="popup-title">{prediction}!</h3>
+              <p className="popup-confidence">Confidence: {confidence}%</p>
+            </div>
+          )}
+          <br></br>
+          <br></br>
+          {isLoading && (
+            <div className="loading-animation">
+              <div className="spinner"></div>
+              <p>Analyzing your masterpiece...</p>
+            </div>
+          )}
         </div>
 
         {doodleHistory.length > 0 && (

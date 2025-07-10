@@ -42,15 +42,21 @@
 }
 
 .app-title {
-  font-size: 3.5rem;
+  font-size: clamp(1.5rem, 5vw, 3rem);
   margin-bottom: 0.5rem;
   position: relative;
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 0.3rem;
 }
 
 .title-word {
-  display: inline-block;
+  font-size: clamp(1.5rem, 5vw, 3rem);
   position: relative;
+  line-height: 1.2;
 }
 
 .title-word:first-child {
@@ -59,22 +65,17 @@
 
 .title-word:last-child {
   color: var(--secondary-color);
-  margin-left: 0.5rem;
 }
 
 .subtitle {
-  font-size: 1rem;
-  font-weight: normal;
-  position: absolute;
-  bottom: -1.5rem;
-  right: 0;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  padding: 0.2rem 0.5rem;
-  border-radius: 20px;
+  display: block;
+  font-size: clamp(0.8rem, 2.5vw, 1.3rem);
+  font-weight: 400;
+  margin-top: 0.25rem;
+  width: 100%;
+  text-align: center;
 }
+
 
 .theme-toggle {
   position: absolute;
@@ -143,13 +144,13 @@
   color: #8d8b8b;
 }
 
-
 .instructions {
   font-style: italic;
   opacity: 0.8;
+  font-size: large;
 }
 
-/* Prediction Result */
+
 .prediction-result {
   margin-top: 2rem;
   min-height: 120px;
@@ -341,4 +342,50 @@
   .canvas-container {
     padding: 1.5rem;
   }
+} 
+.prediction-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #e0d4ff, #d4eaff);
+  padding: 20px;
+  min-width: 220px;
+  border: 2px solid #70024d;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  z-index: 5;
+  animation: popUpScale 0.3s ease-out;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.popup-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2a006b;
+  margin-bottom: 10px;
+}
+
+.popup-confidence {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* Animation */
+@keyframes popUpScale {
+  0% {
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+.popup-image {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
 }

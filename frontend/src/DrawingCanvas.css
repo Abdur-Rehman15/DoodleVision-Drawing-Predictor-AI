@@ -51,3 +51,7 @@
   background-color: #1e1e1e;
   border-color: #ccc;
 }
+
+.drawing-canvas {
+  touch-action: none; /* Prevents mobile scrolling while drawing */
+}
