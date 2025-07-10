@@ -1,15 +1,15 @@
 # 🎨 DoodleVision – AI Drawing Predictor
 
-**DoodleVision** is a web application that lets users draw on a canvas and receive real-time AI predictions about what they've drawn. It uses a machine learning model trained on 5 doodles (Apple, Bucket, Crown, Butterfly, Ladder) to classify the user's sketch and return a prediction with confidence.
+**DoodleVision** is a web application that lets users draw on a canvas and receive real-time AI predictions about what they've drawn. It uses a machine learning model trained on 5 doodles (Apple, Bucket, Crown, Butterfly, Ladder) to classify the user's sketch and returns a prediction with confidence.
 
-🔗 **Live Demo:** [DoodleVision](https://doodlevision-drawing-predictor-ai-rzlj.onrender.com)
+🔗 **Live Demo:** [DoodleVision](https://doodlevision-drawing-predictor-ai-ilhm.onrender.com/)
 
 ---
 
 ## 🚀 Features
 
-- Interactive drawing canvas with brush tools
-- AI-powered predictions using an SVM classifier
+- Interactive drawing canvas with brush tools (mouse + touch support)
+- AI-powered predictions using a **Convolutional Neural Network (CNN)**
 - Displays top prediction with confidence percentage
 - Celebration confetti on high-confidence predictions
 - Keeps recent doodles history
@@ -19,11 +19,11 @@
 
 ## 🛠️ Tech Stack
 
-| Frontend | Backend | Machine Learning |
-|---------|---------|------------------|
-| React   | Node.js + Express | Scikit-learn (SVM, PCA) |
-| HTML/CSS | Python 3 | Joblib, Pillow, NumPy |
-| Canvas API | CORS | Custom-trained doodle classifier |
+| Frontend       | Backend              | Machine Learning     |
+|----------------|----------------------|-----------------------|
+| React          | Node.js + Express    | TensorFlow + Keras   |
+| HTML/CSS       | Python 3             | CNN Classifier       |
+| Canvas API     | CORS                 | Pillow, NumPy, Joblib |
 
 ---
 
@@ -31,9 +31,9 @@
 
 ### 1. Clone the Repository
 
-```bash
+```
 git clone https://github.com/Abdur-Rehman15/DoodleVision-Drawing-Predictor-AI.git
-cd DoodleVision-Drawing-Predictor-AI
+cd doodlevision-drawing-predictor-ai
 ```
 
 ### 2. Backend Setup
@@ -44,7 +44,7 @@ npm install
 pip install -r requirements.txt  
 ```
 
-### 3. Frontend Setup
+### 3. Start Frontend
 
 ```
 cd ../frontend
@@ -69,16 +69,11 @@ node server.js
   - Resize to 64x64
   - Flatten to 1D vector
       
-- 📉 **PCA:**
-  - Used to reduce dimensionality before classification
+- 📉 **Model:**
+  - CNN with two Conv2D layers, pooling, dropout and dense layers
       
-- 🤖 **Classifier:**
-  - Trained SVM (Support Vector Machine) using scikit-learn
-      
-- 💾 Saved using `joblib`:
-  - `model.pkl` – Trained SVM model
-  - `scaler.pkl` – StandardScaler used before PCA
-  - `pca.pkl` – PCA object to transform input
+- 🤖 **Output:**
+  - `.keras` Keras model (`final_cnn_model.keras`)
 
  ---
 
@@ -103,11 +98,9 @@ DoodleVision-Drawing-Predictor-AI/
 ├── backend/
 │   ├── server.js               # Express server to handle /predict route
 │   ├── predictor.py            # Python script to run the ML model
-│   ├── model.pkl               # Trained SVM model (saved using joblib)
-│   ├── scaler.pkl              # Scaler used to normalize input
-│   ├── pca.pkl                 # PCA transformer to reduce input dimensions
+│   ├── cnn_model.keras         # Trained CNN model
 │   ├── requirements.txt        # Python dependencies
-│   └── Dockerfile              # Docker config for backend (optional)
+│   └── Dockerfile              # Docker config for backend
 │
 ├── frontend/
 │   ├── public/
@@ -118,7 +111,7 @@ DoodleVision-Drawing-Predictor-AI/
 │   │   ├── App.css             # App styles
 │   │   └── DrawingCanvas.css   # Canvas styles
 │   ├── package.json            # React app dependencies
-│   └── Dockerfile              # Docker config for frontend (optional)
+│   └── Dockerfile              # Docker config for frontend
 │
 ├── docker-compose.yml          # Combined deployment config (optional)
 ├── README.md                   # You're reading it
