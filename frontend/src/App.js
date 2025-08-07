@@ -13,7 +13,7 @@ function App() {
   const handleSubmit = async (image) => {
     setIsLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/predict', {
+      const res = await fetch(`${import.meta.env.BACKEND_URL}/predict`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ image }),
