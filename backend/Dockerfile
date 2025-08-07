@@ -5,7 +5,7 @@ FROM node:18
 WORKDIR /app
 
 # --- Node.js setup ---
-COPY backend/package*.json ./
+COPY package*.json .
 RUN npm install
 
 # --- System and Python setup ---
@@ -24,11 +24,11 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN pip install --upgrade pip
 
 # Copy requirements and install Python packages
-COPY backend/requirements.txt .
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # Copy the rest of the backend files
-COPY backend/ .
+COPY . .
 
 # Expose backend port
 EXPOSE 5000

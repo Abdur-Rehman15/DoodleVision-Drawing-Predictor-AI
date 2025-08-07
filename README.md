@@ -79,7 +79,30 @@ node server.js
 
 ### 🌐 Deployment
 
-This project is deployed using Render for both frontend and backend:
+#### Single Container Deployment (Recommended)
+
+The project now uses a single Docker container that combines both frontend and backend:
+
+```bash
+# Quick deployment (includes fallback options)
+chmod +x deploy.sh
+./deploy.sh
+
+# Or manually
+docker build -t doodlevision-ai .
+docker run -d --name doodlevision-ai -p 80:80 --restart unless-stopped doodlevision-ai
+
+# If SSL issues occur, try alternative build
+docker build -f Dockerfile.alternative -t doodlevision-ai .
+```
+
+#### Docker Compose (Alternative)
+
+```bash
+docker-compose up -d
+```
+
+#### Manual Setup (Development)
 
 - 🔧 **Backend (Node.js + Python ML):**
   - Hosted on Render
@@ -98,9 +121,9 @@ DoodleVision-Drawing-Predictor-AI/
 ├── backend/
 │   ├── server.js               # Express server to handle /predict route
 │   ├── predictor.py            # Python script to run the ML model
-│   ├── cnn_model.keras         # Trained CNN model
+│   ├── final_cnn_model.keras   # Trained CNN model
 │   ├── requirements.txt        # Python dependencies
-│   └── Dockerfile              # Docker config for backend
+│   └── package.json           # Node.js dependencies
 │
 ├── frontend/
 │   ├── public/
@@ -110,15 +133,62 @@ DoodleVision-Drawing-Predictor-AI/
 │   │   ├── DrawingCanvas.js    # Canvas where user draws
 │   │   ├── App.css             # App styles
 │   │   └── DrawingCanvas.css   # Canvas styles
-│   ├── package.json            # React app dependencies
-│   └── Dockerfile              # Docker config for frontend
+│   └── package.json            # React app dependencies
 │
-├── docker-compose.yml          # Combined deployment config (optional)
+├── Dockerfile                  # Single container for both frontend & backend
+├── Dockerfile.alternative      # Alternative build (if SSL issues occur)
+├── nginx.conf                  # Nginx configuration for serving frontend & proxying API
+├── supervisord.conf            # Process manager for nginx & backend
+├── docker-compose.yml          # Docker Compose configuration
+├── deploy.sh                   # Quick deployment script
+├── .dockerignore               # Docker build exclusions
 ├── README.md                   # You're reading it
-└── .gitignore                  # Files to ignore in Git
+ └── .gitignore                  # Files to ignore in Git
 ```
 
+---
 
- 
+## 🔧 Troubleshooting
 
- 
+### SSL/Network Issues During Build
+
+If you encounter SSL errors during the Docker build (like the one you experienced), try these solutions:
+
+1. **Use the alternative Dockerfile:**
+   ```bash
+   docker build -f Dockerfile.alternative -t doodlevision-ai .
+   ```
+
+2. **Use the deploy script (includes automatic fallback):**
+   ```bash
+   ./deploy.sh
+   ```
+
+3. **Manual retry with different pip options:**
+   ```bash
+   # Clear Docker cache first
+   docker system prune -a
+   
+   # Then try building again
+   docker build -t doodlevision-ai .
+   ```
+
+### Common Issues
+
+- **Port 80 already in use:** Change the port mapping to `-p 8080:80`
+- **Memory issues:** Ensure you have at least 4GB RAM available
+- **Slow downloads:** The build downloads ~650MB of ML libraries, be patient
+
+### Logs and Debugging
+
+```bash
+# Check container logs
+docker logs doodlevision-ai
+
+# Check specific service logs
+docker exec doodlevision-ai tail -f /var/log/supervisor/backend.out.log
+docker exec doodlevision-ai tail -f /var/log/supervisor/nginx.out.log
+
+# Access container shell
+docker exec -it doodlevision-ai bash
+``` 

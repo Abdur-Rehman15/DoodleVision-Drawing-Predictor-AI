@@ -8,7 +8,9 @@ const path = require('path');
 const app = express();
 const PORT = 5000;
 
-app.use(cors());
+app.use(cors({
+    origin: '*'
+}));
 app.use(bodyParser.json({ limit: '10mb' }));
 
 // Prediction endpoint
@@ -25,8 +27,8 @@ app.post('/predict', async (req, res) => {
         
         await fs.promises.writeFile(imagePath, base64Data, 'base64');
 
-        // Execute Python script
-        exec('python predictor.py', (error, stdout, stderr) => {
+        // Execute Python script from the correct directory
+        exec('python predictor.py', { cwd: __dirname }, (error, stdout, stderr) => {
             if (error) {
                 console.error(`[SERVER ERROR] ${stderr}`);
                 return res.status(500).json({ error: 'Prediction failed', details: stderr });
@@ -51,9 +53,5 @@ app.post('/predict', async (req, res) => {
     }
 });
 
-// Health check
-app.get('/health', (req, res) => {
-    res.status(200).send('OK');
-});
 
-app.listen(PORT, () => console.log(`🧠 Doodle API running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`🧠 Doodle API running on port ${PORT}`));

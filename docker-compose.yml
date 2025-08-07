@@ -1,18 +1,10 @@
 services:
-  backend:
+  doodlevision:
     build:
       context: .
-      dockerfile: backend/Dockerfile
+      dockerfile: Dockerfile
     ports:
-      - "5000:5000"
-    volumes:
-      - ./backend:/app
+      - "80:80"
     restart: always
-
-  frontend:
-    build:
-      context: .
-      dockerfile: frontend/Dockerfile
-    ports:
-      - "3000:80"
-    restart: always
+    environment:
+      - NODE_ENV=production
