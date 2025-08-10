@@ -2,7 +2,7 @@
 
 **DoodleVision** is a web application that lets users draw on a canvas and receive real-time AI predictions about what they've drawn. It uses a machine learning model trained on 5 doodles (Apple, Bucket, Crown, Butterfly, Ladder) to classify the user's sketch and returns a prediction with confidence.
 
-🔗 **Live Demo:** [DoodleVision](https://doodlevision-drawing-predictor-ai-ilhm.onrender.com/)
+🔗 **Live Demo:** [DoodleVision](https://doodlevision-ai.onrender.com/)
 
 ---
 
